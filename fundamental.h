@@ -12,7 +12,8 @@
 #include<stdlib.h>
 #include<iomanip>
 #include<QtDebug>
-
+#include<QString>
+#include<QFileDialog>
 
 using namespace std;
 using namespace cv;
@@ -20,8 +21,13 @@ using namespace cv;
 class ImageDisplayer:public QGLWidget
 {
   Q_OBJECT
+public slots:
+void LoadImage();
 public:
-  Mat LoadImage();
+  ImageDisplayer();
+  void Display();
+public:
+  Mat image;
 };
 
 #endif // FUNDAMENTAL_H
