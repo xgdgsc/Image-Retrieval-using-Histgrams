@@ -14,6 +14,8 @@
 #include<QtDebug>
 #include<QString>
 #include<QFileDialog>
+#include<GL/glu.h>
+#include<QShortcut>
 
 using namespace std;
 using namespace cv;
@@ -22,12 +24,16 @@ class ImageDisplayer:public QGLWidget
 {
   Q_OBJECT
 public slots:
-void LoadImage();
+  void LoadImage();
 public:
-  ImageDisplayer();
+  ImageDisplayer(QWidget *parent = NULL);
   void Display();
 public:
-  Mat image;
+  IplImage *img;
+protected:
+  void initializeGL();
+  void resizeGL(int w, int h);
+  void paintGL();
 };
 
 #endif // FUNDAMENTAL_H

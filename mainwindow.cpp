@@ -6,7 +6,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->id=new ImageDisplayer;
+    this->id=new ImageDisplayer(this);
+    this->setCentralWidget(id);
+    QShortcut* Exit=new QShortcut(QKeySequence("Ctrl+q"),this);
+    connect(Exit,SIGNAL(activated()),this,SLOT(close()));
 }
 
 MainWindow::~MainWindow()
