@@ -28,3 +28,6 @@ win32 {
 unix {
             LIBS+= -lGLU -lopencv_core -lopencv_highgui
 }
+
+RESOURCES += \
+    icon.qrc

@@ -4,6 +4,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setWindowIcon(QIcon(":/icon/dip"));
     MainWindow w;
     w.setWindowTitle("DIPfundamental");
 

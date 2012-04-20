@@ -1,8 +1,6 @@
 #ifndef FUNDAMENTAL_H
 #define FUNDAMENTAL_H
-#include<QtOpenGL/QGLWidget>
-#include"mainwindow.h"
-#include"libs.h"
+
 #include<vector>
 #include<map>
 #include<opencv2/opencv.hpp>
@@ -11,16 +9,23 @@
 #include<iostream>
 #include<stdlib.h>
 #include<iomanip>
+
+#include<QtOpenGL/QtOpenGL>
 #include<QtDebug>
 #include<QString>
 #include<QFileDialog>
 #include<GL/glu.h>
 #include<QShortcut>
+#include<QImage>
+#include<QIcon>
+
+#include"libs.h"
+#include"mainwindow.h"
 
 using namespace std;
 using namespace cv;
 
-class ImageDisplayer:public QGLWidget
+class ImageDisplayer:public QWidget
 {
   Q_OBJECT
 public slots:
@@ -31,9 +36,9 @@ public:
 public:
   IplImage *img;
 protected:
-  void initializeGL();
-  void resizeGL(int w, int h);
-  void paintGL();
+//  void initializeGL();
+//  void resizeGL(int w, int h);
+//  void paintGL();
 };
 
 #endif // FUNDAMENTAL_H

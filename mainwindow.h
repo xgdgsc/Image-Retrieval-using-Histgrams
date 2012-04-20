@@ -14,7 +14,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    
+    void initializeShortcuts();
+    void initializeWidgets();
 private:
     Ui::MainWindow *ui;
 public slots:

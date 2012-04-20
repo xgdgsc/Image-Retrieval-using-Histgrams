@@ -6,10 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->id=new ImageDisplayer(this);
-    this->setCentralWidget(id);
-    QShortcut* Exit=new QShortcut(QKeySequence("Ctrl+q"),this);
-    connect(Exit,SIGNAL(activated()),this,SLOT(close()));
+    initializeWidgets();
+    initializeShortcuts();
 }
 
 MainWindow::~MainWindow()
@@ -25,4 +23,16 @@ void MainWindow::on_actionExit_activated()
 void MainWindow::on_actionOpen_activated()
 {
   id->LoadImage();
+}
+
+void MainWindow::initializeShortcuts()
+{
+  QShortcut* Exit=new QShortcut(QKeySequence("Ctrl+q"),this);
+  connect(Exit,SIGNAL(activated()),this,SLOT(close()));
+}
+
+void MainWindow::initializeWidgets()
+{
+  this->id=new ImageDisplayer(this);
+  this->setCentralWidget(id);
 }
