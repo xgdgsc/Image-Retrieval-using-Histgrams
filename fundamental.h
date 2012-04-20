@@ -20,21 +20,33 @@
 #include<QIcon>
 
 #include"libs.h"
-#include"mainwindow.h"
+
 
 using namespace std;
 using namespace cv;
-
-class ImageDisplayer:public QWidget
+namespace Ui{
+  class ImageDisplayer;
+}
+class ImageDisplayer:public QMainWindow
 {
   Q_OBJECT
-public slots:
-  void LoadImage();
+
 public:
-  ImageDisplayer(QWidget *parent = NULL);
+  explicit ImageDisplayer(QWidget *parent =0);
+  ~ImageDisplayer();
   void Display();
 public:
   IplImage *img;
+public slots:
+    void LoadImage();
+    void on_actionOpen_activated();
+    void on_actionExit_activated();
+private:
+    Ui::ImageDisplayer *ui;
+  QLabel *imageLabel;
+  QScrollArea *scrollArea;
+  void initializeShortcuts();
+  void initializeWidgets();
 protected:
 //  void initializeGL();
 //  void resizeGL(int w, int h);

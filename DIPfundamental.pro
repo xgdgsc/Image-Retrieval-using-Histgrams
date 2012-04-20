@@ -11,11 +11,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     libs.cpp \
     fundamental.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     fundamental.h \
     libs.h
 

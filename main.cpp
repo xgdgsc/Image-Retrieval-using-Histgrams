@@ -1,11 +1,11 @@
 #include <QtGui/QApplication>
-#include "mainwindow.h"
+#include "fundamental.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     a.setWindowIcon(QIcon(":/icon/dip"));
-    MainWindow w;
+    ImageDisplayer w;
     w.setWindowTitle("DIPfundamental");
 
     w.show();

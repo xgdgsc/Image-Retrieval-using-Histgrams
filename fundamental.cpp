@@ -1,5 +1,34 @@
 #include"fundamental.h"
 #include"libs.h"
+#include"ui_mainwindow.h"
+
+ImageDisplayer::ImageDisplayer(QWidget *parent):
+  QMainWindow(parent),
+  ui(new Ui::ImageDisplayer)
+{
+  img=NULL;
+  ui->setupUi(this);
+  QShortcut *Open = new QShortcut(QKeySequence("Ctrl+o"), this);
+  QObject::connect(Open, SIGNAL(activated()), this, SLOT(LoadImage()));
+  //initializeWidgets();
+  initializeShortcuts();
+  imageLabel = new QLabel;
+  imageLabel->setBackgroundRole(QPalette::Base);
+  imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+  imageLabel->setScaledContents(true);
+
+  scrollArea = new QScrollArea;
+  scrollArea->setBackgroundRole(QPalette::Dark);
+  scrollArea->setWidget(imageLabel);
+  setCentralWidget(scrollArea);
+
+  resize(500, 400);
+}
+
+ImageDisplayer::~ImageDisplayer()
+{
+  delete ui;
+}
 
 void ImageDisplayer::LoadImage()
 {
@@ -8,15 +37,42 @@ void ImageDisplayer::LoadImage()
     {
       cout<<fileName.toStdString()<<endl;
       this->img=cvLoadImage(fileName.toStdString().c_str(),4);
+
+      QImage qimg=IplImage2QImage(this->img);
+     // QImage qimg(fileName);
+      if (qimg.isNull()) {
+          QMessageBox::information(this, tr("Image Viewer"),
+                                   tr("Cannot load %1.").arg(fileName));
+          return;
+        }
+      imageLabel->setPixmap(QPixmap::fromImage(qimg));
+
+     // scaleFactor = 1.0;
     }
 }
 
-ImageDisplayer::ImageDisplayer(QWidget *parent):QWidget(parent)
+void ImageDisplayer::on_actionExit_activated()
 {
-  img=NULL;
-  QShortcut *Open = new QShortcut(QKeySequence("Ctrl+o"), parent);
-  QObject::connect(Open, SIGNAL(activated()), this, SLOT(LoadImage()));
+  this->close();
 }
+
+void ImageDisplayer::on_actionOpen_activated()
+{
+  this->LoadImage();
+}
+
+void ImageDisplayer::initializeShortcuts()
+{
+  QShortcut* Exit=new QShortcut(QKeySequence("Ctrl+q"),this);
+  connect(Exit,SIGNAL(activated()),this,SLOT(close()));
+}
+
+//void ImageDisplayer::initializeWidgets()
+//{
+//  this->id=new ImageDisplayer(this);
+//  this->setCentralWidget(id);
+//}
+
 
 
 
