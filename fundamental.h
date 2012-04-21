@@ -45,8 +45,17 @@ private:
     Ui::ImageDisplayer *ui;
   QLabel *imageLabel;
   QScrollArea *scrollArea;
+  QAction *normalSizeAct;
+  QAction *fitToWindowAct;
+  QAction *zoomInAct;
+  QAction *zoomOutAct;
+private:
   void initializeShortcuts();
   void initializeWidgets();
+  void fitToWindow();
+  void normalSize();
+  void updateActions();
+  double scaleFactor;
 protected:
 //  void initializeGL();
 //  void resizeGL(int w, int h);

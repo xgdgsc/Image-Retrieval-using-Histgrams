@@ -20,9 +20,10 @@ ImageDisplayer::ImageDisplayer(QWidget *parent):
   scrollArea = new QScrollArea;
   scrollArea->setBackgroundRole(QPalette::Dark);
   scrollArea->setWidget(imageLabel);
+  scrollArea->setWidgetResizable(true);
   setCentralWidget(scrollArea);
 
-  resize(500, 400);
+  resize(1024, 768);
 }
 
 ImageDisplayer::~ImageDisplayer()
@@ -39,15 +40,17 @@ void ImageDisplayer::LoadImage()
       this->img=cvLoadImage(fileName.toStdString().c_str(),4);
 
       QImage qimg=IplImage2QImage(this->img);
-     // QImage qimg(fileName);
-      if (qimg.isNull()) {
-          QMessageBox::information(this, tr("Image Viewer"),
-                                   tr("Cannot load %1.").arg(fileName));
-          return;
-        }
+      // QImage qimg(fileName);
+      //      if (qimg.isNull()) {
+      //          QMessageBox::information(this, tr("Image Viewer"),
+      //                                   tr("Cannot load %1.").arg(fileName));
+      //          return;
+      //        }
+
+
       imageLabel->setPixmap(QPixmap::fromImage(qimg));
 
-     // scaleFactor = 1.0;
+      // scaleFactor = 1.0;
     }
 }
 
@@ -67,6 +70,31 @@ void ImageDisplayer::initializeShortcuts()
   connect(Exit,SIGNAL(activated()),this,SLOT(close()));
 }
 
+void ImageDisplayer::fitToWindow()
+//! [13] //! [14]
+{
+    bool fitToWindow = fitToWindowAct->isChecked();
+    scrollArea->setWidgetResizable(fitToWindow);
+    if (!fitToWindow) {
+        normalSize();
+    }
+    updateActions();
+}
+
+void ImageDisplayer::normalSize()
+//! [11] //! [12]
+{
+    imageLabel->adjustSize();
+    scaleFactor = 1.0;
+}
+
+void ImageDisplayer::updateActions()
+//! [21] //! [22]
+{
+    zoomInAct->setEnabled(!fitToWindowAct->isChecked());
+    zoomOutAct->setEnabled(!fitToWindowAct->isChecked());
+    normalSizeAct->setEnabled(!fitToWindowAct->isChecked());
+}
 //void ImageDisplayer::initializeWidgets()
 //{
 //  this->id=new ImageDisplayer(this);
