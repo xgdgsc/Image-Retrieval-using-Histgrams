@@ -1,6 +1,6 @@
 #include"fundamental.h"
 #include"libs.h"
-#include"ui_mainwindow.h"
+
 
 ImageDisplayer::ImageDisplayer(QWidget *parent):
   QMainWindow(parent),
@@ -8,10 +8,9 @@ ImageDisplayer::ImageDisplayer(QWidget *parent):
 {
   img=NULL;
   ui->setupUi(this);
-  QShortcut *Open = new QShortcut(QKeySequence("Ctrl+o"), this);
-  QObject::connect(Open, SIGNAL(activated()), this, SLOT(LoadImage()));
+
   //initializeWidgets();
-  initializeShortcuts();
+  //initializeShortcuts();
   imageLabel = new QLabel;
   imageLabel->setBackgroundRole(QPalette::Base);
   imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
@@ -49,8 +48,11 @@ void ImageDisplayer::LoadImage()
 
 
       imageLabel->setPixmap(QPixmap::fromImage(qimg));
-
-      // scaleFactor = 1.0;
+      scaleFactor = 1.0;
+      if (!ui->action_Fit_to_Window->isChecked())
+        {
+          imageLabel->adjustSize();
+        }
     }
 }
 
@@ -64,36 +66,29 @@ void ImageDisplayer::on_actionOpen_activated()
   this->LoadImage();
 }
 
-void ImageDisplayer::initializeShortcuts()
-{
-  QShortcut* Exit=new QShortcut(QKeySequence("Ctrl+q"),this);
-  connect(Exit,SIGNAL(activated()),this,SLOT(close()));
-}
+
 
 void ImageDisplayer::fitToWindow()
-//! [13] //! [14]
 {
-    bool fitToWindow = fitToWindowAct->isChecked();
-    scrollArea->setWidgetResizable(fitToWindow);
-    if (!fitToWindow) {
-        normalSize();
+  bool fitToWindow =ui->action_Fit_to_Window->isChecked();
+  scrollArea->setWidgetResizable(fitToWindow);
+  if (!fitToWindow) {
+      normalSize();
     }
-    updateActions();
+  updateActions();
 }
 
 void ImageDisplayer::normalSize()
-//! [11] //! [12]
 {
-    imageLabel->adjustSize();
-    scaleFactor = 1.0;
+  imageLabel->adjustSize();
+  scaleFactor = 1.0;
 }
 
 void ImageDisplayer::updateActions()
-//! [21] //! [22]
 {
-    zoomInAct->setEnabled(!fitToWindowAct->isChecked());
-    zoomOutAct->setEnabled(!fitToWindowAct->isChecked());
-    normalSizeAct->setEnabled(!fitToWindowAct->isChecked());
+//  zoomInAct->setEnabled(!fitToWindowAct->isChecked());
+//  zoomOutAct->setEnabled(!fitToWindowAct->isChecked());
+  //normalSizeAct->setEnabled(!ui->action_Fit_to_Window->isChecked());
 }
 //void ImageDisplayer::initializeWidgets()
 //{

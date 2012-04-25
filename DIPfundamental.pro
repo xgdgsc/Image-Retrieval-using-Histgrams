@@ -22,6 +22,7 @@ FORMS    += mainwindow.ui
 win32 {
             LIBS+="D:/Program Files/opencv/build/x86/mingw/lib/libopencv_core231.dll.a" \
                     "D:/Program Files/opencv/build/x86/mingw/lib/libopencv_highgui231.dll.a"
+            INCLUDEPATH+="D:/Program Files/opencv/include/opencv"
 }
 
 unix {

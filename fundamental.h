@@ -3,7 +3,6 @@
 
 #include<vector>
 #include<map>
-#include<opencv2/opencv.hpp>
 #include<string>
 #include<fstream>
 #include<iostream>
@@ -19,8 +18,17 @@
 #include<QImage>
 #include<QIcon>
 
-#include"libs.h"
+#ifdef Q_WS_X11
+#include<opencv2/opencv.hpp>
+#endif
 
+#ifdef Q_WS_WIN
+#include<cv.h>
+#endif
+
+
+#include"libs.h"
+#include"ui_mainwindow.h"
 
 using namespace std;
 using namespace cv;
@@ -45,10 +53,6 @@ private:
     Ui::ImageDisplayer *ui;
   QLabel *imageLabel;
   QScrollArea *scrollArea;
-  QAction *normalSizeAct;
-  QAction *fitToWindowAct;
-  QAction *zoomInAct;
-  QAction *zoomOutAct;
 private:
   void initializeShortcuts();
   void initializeWidgets();
