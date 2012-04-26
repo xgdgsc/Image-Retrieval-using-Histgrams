@@ -8,7 +8,7 @@ ImageDisplayer::ImageDisplayer(QWidget *parent):
 {
   img=NULL;
   ui->setupUi(this);
-
+  initializeIcons();
   //initializeWidgets();
   //initializeShortcuts();
   imageLabel = new QLabel;
@@ -22,7 +22,7 @@ ImageDisplayer::ImageDisplayer(QWidget *parent):
   scrollArea->setWidgetResizable(true);
   setCentralWidget(scrollArea);
 
-  resize(1024, 768);
+  resize(1024,600);
 }
 
 ImageDisplayer::~ImageDisplayer()
@@ -66,6 +66,11 @@ void ImageDisplayer::on_actionOpen_activated()
   this->LoadImage();
 }
 
+void ImageDisplayer::on_action_About_activated()
+{
+  QMessageBox::about(this, tr("About DIPfundamental"),
+          tr("Written by GaoShichao"));
+}
 
 
 void ImageDisplayer::fitToWindow()
@@ -96,7 +101,11 @@ void ImageDisplayer::updateActions()
 //  this->setCentralWidget(id);
 //}
 
-
+void ImageDisplayer::initializeIcons()
+{
+  ui->actionOpen->setIcon(qcs.standardIcon(QStyle::SP_DirIcon,0,0));
+  ui->actionExit->setIcon(qcs.standardIcon(QStyle::SP_DialogCloseButton,0,0));
+}
 
 
 

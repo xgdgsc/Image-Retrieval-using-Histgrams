@@ -17,6 +17,8 @@
 #include<QShortcut>
 #include<QImage>
 #include<QIcon>
+#include<QStyle>
+#include<QCommonStyle>
 
 #ifdef Q_WS_X11
 #include<opencv2/opencv.hpp>
@@ -46,24 +48,27 @@ public:
 public:
   IplImage *img;
 public slots:
-    void LoadImage();
-    void on_actionOpen_activated();
-    void on_actionExit_activated();
+  void LoadImage();
+  void on_actionOpen_activated();
+  void on_actionExit_activated();
+  void on_action_About_activated();
 private:
-    Ui::ImageDisplayer *ui;
+  Ui::ImageDisplayer *ui;
   QLabel *imageLabel;
   QScrollArea *scrollArea;
+  QCommonStyle  qcs;
 private:
   void initializeShortcuts();
   void initializeWidgets();
+  void initializeIcons();
   void fitToWindow();
   void normalSize();
   void updateActions();
   double scaleFactor;
 protected:
-//  void initializeGL();
-//  void resizeGL(int w, int h);
-//  void paintGL();
+  //  void initializeGL();
+  //  void resizeGL(int w, int h);
+  //  void paintGL();
 };
 
 #endif // FUNDAMENTAL_H

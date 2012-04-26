@@ -37,8 +37,15 @@
     <addaction name="action_Actual_Size"/>
     <addaction name="action_Fit_to_Window"/>
    </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_About"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menu_View"/>
+   <addaction name="menu_Help"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -78,8 +85,19 @@
     <string>&amp;Fit to Window</string>
    </property>
   </action>
+  <action name="action_About">
+   <property name="icon">
+    <iconset resource="icon.qrc">
+     <normaloff>:/icon/dip</normaloff>:/icon/dip</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="icon.qrc"/>
+ </resources>
  <connections/>
 </ui>
