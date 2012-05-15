@@ -13,8 +13,8 @@ ImageDisplayer::ImageDisplayer(QWidget *parent):
   //initializeShortcuts();
   imageLabel = new QLabel;
   imageLabel->setBackgroundRole(QPalette::Base);
-  imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-  imageLabel->setScaledContents(true);
+  //imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+  //imageLabel->setScaledContents(true);
 
   scrollArea = new QScrollArea;
   scrollArea->setBackgroundRole(QPalette::Dark);
@@ -30,7 +30,7 @@ ImageDisplayer::~ImageDisplayer()
   delete ui;
 }
 
-void ImageDisplayer::LoadImage()
+void ImageDisplayer::loadImage()
 {
   QString fileName = QFileDialog::getOpenFileName(this,tr("Open Image"),"/home/gsc/Documents",tr("Image Files (*.png *.jpg *.bmp *.jpeg *.tiff *.tif *.p?m *.sr *.jp2);;All Files (*.*);;BMP(*.bmp);;JPEG(*.jpg *.jpeg *.jp2);;PNG(*.png);;TIFF(*.tif *.tiff)"));
   if (!fileName.isEmpty())
@@ -63,7 +63,7 @@ void ImageDisplayer::on_actionExit_activated()
 
 void ImageDisplayer::on_actionOpen_activated()
 {
-  this->LoadImage();
+  this->loadImage();
 }
 
 void ImageDisplayer::on_action_About_activated()
@@ -72,11 +72,16 @@ void ImageDisplayer::on_action_About_activated()
           tr("Written by GaoShichao"));
 }
 
+void ImageDisplayer::on_action_Fit_to_Window_changed()
+{
+  fitToWindow();
+}
 
 void ImageDisplayer::fitToWindow()
 {
   bool fitToWindow =ui->action_Fit_to_Window->isChecked();
   scrollArea->setWidgetResizable(fitToWindow);
+  imageLabel->setScaledContents(true);
   if (!fitToWindow) {
       normalSize();
     }
@@ -107,9 +112,45 @@ void ImageDisplayer::initializeIcons()
   ui->actionExit->setIcon(qcs.standardIcon(QStyle::SP_DialogCloseButton,0,0));
 }
 
+void ImageDisplayer::zoomIn()
+//! [9] //! [10]
+{
+    scaleImage(1.25);
+}
+
+void ImageDisplayer::zoomOut()
+{
+    scaleImage(0.8);
+}
+
+void ImageDisplayer::on_actionZoom_In_activated()
+{
+  zoomIn();
+}
+
+ void ImageDisplayer::on_actionZoom_Out_activated()
+ {
+   zoomOut();
+ }
+
+void ImageDisplayer::scaleImage(double factor)
+{
+  Q_ASSERT(imageLabel->pixmap());
+  scaleFactor *= factor;
+  imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
+
+  adjustScrollBar(scrollArea->horizontalScrollBar(), factor);
+  adjustScrollBar(scrollArea->verticalScrollBar(), factor);
+
+}
 
 
-
+void ImageDisplayer::adjustScrollBar(QScrollBar *scrollBar, double factor)
+//! [25] //! [26]
+{
+    scrollBar->setValue(int(factor * scrollBar->value()
+                            + ((factor - 1) * scrollBar->pageStep()/2)));
+}
 //void ImageDisplayer::initializeGL()
 //{
 //  glDisable(GL_TEXTURE_2D);

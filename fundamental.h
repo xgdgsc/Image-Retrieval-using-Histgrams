@@ -48,10 +48,13 @@ public:
 public:
   IplImage *img;
 public slots:
-  void LoadImage();
+  void loadImage();
   void on_actionOpen_activated();
   void on_actionExit_activated();
   void on_action_About_activated();
+  void on_actionZoom_In_activated();
+  void on_actionZoom_Out_activated();
+  void on_action_Fit_to_Window_changed();
 private:
   Ui::ImageDisplayer *ui;
   QLabel *imageLabel;
@@ -64,6 +67,10 @@ private:
   void fitToWindow();
   void normalSize();
   void updateActions();
+  void scaleImage(double factor);
+  void adjustScrollBar(QScrollBar* scrollBar, double factor);
+  void zoomIn();
+  void zoomOut();
   double scaleFactor;
 protected:
   //  void initializeGL();
