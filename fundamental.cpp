@@ -13,13 +13,13 @@ ImageDisplayer::ImageDisplayer(QWidget *parent):
   //initializeShortcuts();
   imageLabel = new QLabel;
   imageLabel->setBackgroundRole(QPalette::Base);
-  //imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-  //imageLabel->setScaledContents(true);
+  imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+  imageLabel->setScaledContents(true);
 
   scrollArea = new QScrollArea;
   scrollArea->setBackgroundRole(QPalette::Dark);
   scrollArea->setWidget(imageLabel);
-  scrollArea->setWidgetResizable(true);
+  //scrollArea->setWidgetResizable(true);
   setCentralWidget(scrollArea);
 
   resize(1024,600);
@@ -37,18 +37,13 @@ void ImageDisplayer::loadImage()
     {
       cout<<fileName.toStdString()<<endl;
       this->img=cvLoadImage(fileName.toStdString().c_str(),4);
-
       QImage qimg=IplImage2QImage(this->img);
-      // QImage qimg(fileName);
-      //      if (qimg.isNull()) {
-      //          QMessageBox::information(this, tr("Image Viewer"),
-      //                                   tr("Cannot load %1.").arg(fileName));
-      //          return;
-      //        }
-
-
       imageLabel->setPixmap(QPixmap::fromImage(qimg));
       scaleFactor = 1.0;
+
+      ui->action_Fit_to_Window->setEnabled(true);
+      updateActions();
+
       if (!ui->action_Fit_to_Window->isChecked())
         {
           imageLabel->adjustSize();
@@ -56,32 +51,37 @@ void ImageDisplayer::loadImage()
     }
 }
 
-void ImageDisplayer::on_actionExit_activated()
+void ImageDisplayer::on_actionExit_triggered()
 {
   this->close();
 }
 
-void ImageDisplayer::on_actionOpen_activated()
+void ImageDisplayer::on_actionOpen_triggered()
 {
   this->loadImage();
 }
 
-void ImageDisplayer::on_action_About_activated()
+void ImageDisplayer::on_action_About_triggered()
 {
   QMessageBox::about(this, tr("About DIPfundamental"),
-          tr("Written by GaoShichao"));
+                     tr("Written by GaoShichao"));
 }
 
-void ImageDisplayer::on_action_Fit_to_Window_changed()
+void ImageDisplayer::on_action_Fit_to_Window_triggered()
 {
   fitToWindow();
+}
+
+void ImageDisplayer::on_action_Actual_Size_triggered()
+{
+  normalSize();
 }
 
 void ImageDisplayer::fitToWindow()
 {
   bool fitToWindow =ui->action_Fit_to_Window->isChecked();
   scrollArea->setWidgetResizable(fitToWindow);
-  imageLabel->setScaledContents(true);
+
   if (!fitToWindow) {
       normalSize();
     }
@@ -96,15 +96,10 @@ void ImageDisplayer::normalSize()
 
 void ImageDisplayer::updateActions()
 {
-//  zoomInAct->setEnabled(!fitToWindowAct->isChecked());
-//  zoomOutAct->setEnabled(!fitToWindowAct->isChecked());
-  //normalSizeAct->setEnabled(!ui->action_Fit_to_Window->isChecked());
+  ui->actionZoom_In->setEnabled(!ui->action_Fit_to_Window->isChecked());
+  ui->actionZoom_Out->setEnabled(!ui->action_Fit_to_Window->isChecked());
+  ui->action_Actual_Size->setEnabled(!ui->action_Fit_to_Window->isChecked());
 }
-//void ImageDisplayer::initializeWidgets()
-//{
-//  this->id=new ImageDisplayer(this);
-//  this->setCentralWidget(id);
-//}
 
 void ImageDisplayer::initializeIcons()
 {
@@ -115,23 +110,23 @@ void ImageDisplayer::initializeIcons()
 void ImageDisplayer::zoomIn()
 //! [9] //! [10]
 {
-    scaleImage(1.25);
+  scaleImage(1.25);
 }
 
 void ImageDisplayer::zoomOut()
 {
-    scaleImage(0.8);
+  scaleImage(0.8);
 }
 
-void ImageDisplayer::on_actionZoom_In_activated()
+void ImageDisplayer::on_actionZoom_In_triggered()
 {
   zoomIn();
 }
 
- void ImageDisplayer::on_actionZoom_Out_activated()
- {
-   zoomOut();
- }
+void ImageDisplayer::on_actionZoom_Out_triggered()
+{
+  zoomOut();
+}
 
 void ImageDisplayer::scaleImage(double factor)
 {
@@ -148,8 +143,8 @@ void ImageDisplayer::scaleImage(double factor)
 void ImageDisplayer::adjustScrollBar(QScrollBar *scrollBar, double factor)
 //! [25] //! [26]
 {
-    scrollBar->setValue(int(factor * scrollBar->value()
-                            + ((factor - 1) * scrollBar->pageStep()/2)));
+  scrollBar->setValue(int(factor * scrollBar->value()
+                          + ((factor - 1) * scrollBar->pageStep()/2)));
 }
 //void ImageDisplayer::initializeGL()
 //{

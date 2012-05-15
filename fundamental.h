@@ -49,12 +49,13 @@ public:
   IplImage *img;
 public slots:
   void loadImage();
-  void on_actionOpen_activated();
-  void on_actionExit_activated();
-  void on_action_About_activated();
-  void on_actionZoom_In_activated();
-  void on_actionZoom_Out_activated();
-  void on_action_Fit_to_Window_changed();
+  void on_actionOpen_triggered();
+  void on_actionExit_triggered();
+  void on_action_About_triggered();
+  void on_actionZoom_In_triggered();
+  void on_actionZoom_Out_triggered();
+  void on_action_Fit_to_Window_triggered();
+  void on_action_Actual_Size_triggered();
 private:
   Ui::ImageDisplayer *ui;
   QLabel *imageLabel;
