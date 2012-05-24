@@ -63,7 +63,7 @@ void ImageDisplayer::on_actionOpen_triggered()
 
 void ImageDisplayer::on_action_About_triggered()
 {
-  QMessageBox::about(this, tr("About DIPfundamental"),
+  QMessageBox::about(this, tr("About DCT"),
                      tr("Written by GaoShichao"));
 }
 
@@ -146,6 +146,12 @@ void ImageDisplayer::adjustScrollBar(QScrollBar *scrollBar, double factor)
   scrollBar->setValue(int(factor * scrollBar->value()
                           + ((factor - 1) * scrollBar->pageStep()/2)));
 }
+
+void ImageDisplayer::on_actionGenerate_triggered()
+{
+
+}
+
 //void ImageDisplayer::initializeGL()
 //{
 //  glDisable(GL_TEXTURE_2D);

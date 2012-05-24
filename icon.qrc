@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/icon">
-        <file alias="dip">plasma.png</file>
+        <file alias="DCT">plasma.png</file>
     </qresource>
 </RCC>

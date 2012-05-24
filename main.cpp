@@ -4,9 +4,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setWindowIcon(QIcon(":/icon/dip"));
+    a.setWindowIcon(QIcon(":/icon/DCT"));
     ImageDisplayer w;
-    w.setWindowTitle("DIPfundamental");
+    w.setWindowTitle("DCT");
 
     w.show();
     
