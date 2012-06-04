@@ -1,7 +1,7 @@
 #include"libs.h"
 #include<Qt>
 #ifdef Q_WS_WIN
-#include"Windows.h"
+#include<windows.h>
 #endif
 // IplImage* qImage2IplImage(const QImage& qImage)
 //{
@@ -57,30 +57,13 @@
 //      return QImage();
 //    }
 //}
-#ifdef Q_WS_WIN
-std::wstring s2ws(const std::string& s);
-#endif
-void myMkdir(string dir)
-{
-#ifdef Q_WS_X11
-    mkdir(dir.c_str(),0777);
-#endif
-#ifdef Q_WS_WIN
-    wstring stemp=s2ws(dir);
-    CreateDirectoryW(stemp.c_str(),NULL);
-#endif
-}
 
-#ifdef Q_WS_WIN
-std::wstring s2ws(const std::string& s)
-{
-    int len;
-    int slength = (int)s.length() + 1;
-    len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
-    wchar_t* buf = new wchar_t[len];
-    MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
-    std::wstring r(buf);
-    delete[] buf;
-    return r;
-}
+ void myMkdir(string dir)
+ {
+#ifdef Q_WS_X11
+   mkdir(dir.c_str(),0777);
 #endif
+#ifdef Q_WS_WIN
+   CreateDirectory(dir,NULL);
+#endif
+ }
